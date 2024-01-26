@@ -12,37 +12,12 @@
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="component_tutorials" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" ambiguous="YES" id="8bC-Xf-vdC">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" id="Occ-uS-hGZ">
-                                <rect key="frame" x="14.924961715176096" y="173" width="361" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <directionalEdgeInsets key="directionalLayoutMargins" top="8" leading="8" bottom="8" trailing="8"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Select Date" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vIY-Oc-NHO">
-                                <rect key="frame" x="152" y="100" width="88" height="48"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="Occ-uS-hGZ" firstAttribute="top" secondItem="vIY-Oc-NHO" secondAttribute="bottom" constant="25" id="EWj-tv-Rgb"/>
-                            <constraint firstItem="vIY-Oc-NHO" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="SSV-No-U0J"/>
-                            <constraint firstItem="vIY-Oc-NHO" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="40" id="UBZ-y3-goa"/>
-                            <constraint firstItem="Occ-uS-hGZ" firstAttribute="centerX" secondItem="vIY-Oc-NHO" secondAttribute="centerX" multiplier="0.8" id="jvN-2P-NFx"/>
-                            <constraint firstItem="vIY-Oc-NHO" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="152" id="ohA-Bz-N9x"/>
-                        </constraints>
                     </view>
-                    <connections>
-                        <outlet property="dateTF" destination="Occ-uS-hGZ" id="Q1a-19-4EE"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
