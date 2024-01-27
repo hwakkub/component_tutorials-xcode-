@@ -1,37 +1,78 @@
-//
-//  ViewController.swift
-//  component_tutorials
-//
-//  Created by jirakit on 25/1/2567 BE.
-//
-
 import UIKit
+import UserNotifications
 
 class ViewController: UIViewController {
-    @IBOutlet weak var dateTF: UITextField!
+   
+    @IBOutlet weak var tittleTF: UITextField!
+    @IBOutlet weak var messageTF: UITextField!
+    @IBOutlet weak var datePicker: UIDatePicker!
+    
+    let notificationCenter = UNUserNotificationCenter.current()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let datePicker = UIDatePicker()
-        datePicker.datePickerMode = .date
-        datePicker.addTarget(self, action: #selector(dateChange(datePicker:)), for: UIControl.Event.valueChanged)
-        datePicker.frame.size = CGSize(width: 0, height: 300)
-        datePicker.preferredDatePickerStyle = .wheels
-        datePicker.maximumDate = Date()
-        dateTF.inputView = datePicker
-        dateTF.text = formatDate(date: Date())
-        
-        
+        notificationCenter.requestAuthorization(options: [.alert,.sound]){
+            (permissionGranted,error) in
+            if(!permissionGranted){
+                print("Permission Denied")
+            }
+        }
     }
-    @objc func dateChange(datePicker:UIDatePicker){
-        dateTF.text = formatDate(date: datePicker.date)
+
+    @IBAction func scheduleAction(_ sender: Any) {
+        notificationCenter.getNotificationSettings{ (settings) in
+            
+            DispatchQueue.main.async {
+                let title = self.tittleTF.text!
+                let message = self.messageTF.text!
+                let date = self.datePicker.date
+                
+                if(settings.authorizationStatus == .authorized)
+                {
+                    let content = UNMutableNotificationContent()
+                    content.title = title
+                    content.body = message
+                    
+                    let dateComp = Calendar.current.dateComponents([.year,.month,.day,.hour,.minute], from: date)
+                    
+                    let trigger = UNCalendarNotificationTrigger(dateMatching: dateComp, repeats: false)
+                    let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+                    
+                    self.notificationCenter.add(request) {(error) in
+                        if(error != nil)
+                        {
+                            print("Error" + error.debugDescription)
+                            return
+                        }
+                    }
+                    let ac = UIAlertController(title: "Notification Scheduled", message: "At "+self.formattedDate(date: date), preferredStyle: .alert)
+                    ac.addAction(UIAlertAction(title:"OK",style: .default,handler: { (_) in}))
+                    self.present(ac,animated:true)
+                }
+                else {
+                    //                let ac.addAction(UIAlertAction(title: "Enable Notification?",message:"To use this feature you must enable notifications in settings", preferredStyle: .alert)
+                    let ac = UIAlertController(title: "Enable Notification?",message:"To use this feature you must enable notifications in settings", preferredStyle: .alert)
+                    let goToSetting = UIAlertAction(title: "Settings", style: .default) {
+                        (_) in guard let settingsURL = URL(string: UIApplication.openSettingsURLString)
+                        else {
+                            return
+                        }
+                        if(UIApplication.shared.canOpenURL(settingsURL)){
+                            UIApplication.shared.open(settingsURL) { (_) in}
+                        }
+                    }
+                    ac.addAction(goToSetting)
+                    ac.addAction(UIAlertAction(title: "Cancel", style: .default,handler: {(_) in }))
+                    self.present(ac,animated:true)
+                }
+            }
+            
+        }
     }
-    func formatDate(date: Date)-> String{
+    func formattedDate(date: Date) -> String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "MMMM dd yyyy"
+        formatter.dateFormat = "d MMM y HH:mm"
         return formatter.string(from: date)
     }
-
-
 }
 
